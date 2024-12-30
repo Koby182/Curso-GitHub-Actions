@@ -1,42 +1,27 @@
-name: Expressions
-run-name: ${{ github.actor }} is learning Expressions
-
+name: Expresiones
+run-name: ¡Estoy aprendiendo a usar Expresiones!
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types: [opened, synchronize]
-    paths:
-      - "**.py"
   workflow_dispatch:
     inputs:
-      favorite_food:
-        description: "Favorite food"
-        default: Pizza
+      edad:
+        description: 'Edad'
         required: true
-        type: choice
-        options:
-          - Pizza
-          - Tacos
-      sauce:
-        description: "Sauce"
+        type: integer
+      nombre:
+        description: 'Tu nombre'
         required: true
-        default: Hot
-        type: choice
-        options:
-          - Hot
-          - Mild
-
+        default: 'Juan'
+        type: string
 jobs:
-  pizza-job:
-    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.favorite_food == 'Pizza' }}
+  mayor:
+    if: ${{ inputs.edad >= 18 }} 
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Pizza with ${{ github.event.inputs.sauce }} sauce"
-
-  tacos-job:
-    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.favorite_food == 'Tacos' }}
+      - name: Correr script
+        run: echo ${{ inputs.nombre }} es mayor de edad
+  menor:
+    if: ${{ inputs.edad < 18 }} 
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Tacos with ${{ github.event.inputs.sauce }} sauce"
+      - name: Correr script
+        run: echo ${{ inputs.nombre }} es menor de edad
